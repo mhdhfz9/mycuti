@@ -19,6 +19,21 @@
                 :placeholder="__('Full name')"
             />
 
+            <!-- IC Number -->
+            <flux:input
+                name="ic_number"
+                :label="__('IC number')"
+                :value="old('ic_number')"
+                type="text"
+                required
+                inputmode="numeric"
+                autocomplete="off"
+                maxlength="12"
+                pattern="\d*"
+                :placeholder="__('12-digit IC number')"
+                x-on:input="$event.target.value = $event.target.value.replace(/\D/g, '').slice(0, 12)"
+            />
+
             <!-- Email Address -->
             <flux:input
                 name="email"

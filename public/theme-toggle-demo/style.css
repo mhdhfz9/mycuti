@@ -1,0 +1,433 @@
+/* ---------------------------------------------------------------- */
+/* Theme tokens                                                      */
+/* ---------------------------------------------------------------- */
+
+:root {
+    --bg: #f4f5f7;
+    --bg-elevated: #ffffff;
+    --bg-elevated-hover: #fbfbfd;
+    --text: #16181d;
+    --text-muted: #5b6270;
+    --border: rgba(15, 18, 25, 0.08);
+    --shadow: rgba(15, 18, 25, 0.08);
+    --accent: #6659ff;
+    --accent-contrast: #ffffff;
+    --accent-soft: rgba(102, 89, 255, 0.1);
+
+    color-scheme: light;
+}
+
+html[data-theme="dark"] {
+    --bg: #101218;
+    --bg-elevated: #191c24;
+    --bg-elevated-hover: #1f232c;
+    --text: #f1f2f6;
+    --text-muted: #9aa0b0;
+    --border: rgba(255, 255, 255, 0.08);
+    --shadow: rgba(0, 0, 0, 0.4);
+    --accent: #8b7dff;
+    --accent-contrast: #101218;
+    --accent-soft: rgba(139, 125, 255, 0.16);
+
+    color-scheme: dark;
+}
+
+/* ---------------------------------------------------------------- */
+/* Base                                                               */
+/* ---------------------------------------------------------------- */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Disabled while a view transition is in-flight so the fallback
+   transition above never fights with the clip-path animation and
+   causes a color flash underneath the reveal. */
+html.disable-transitions,
+html.disable-transitions * {
+    transition: none !important;
+}
+
+.container {
+    width: 100%;
+    max-width: 1080px;
+    margin-inline: auto;
+    padding-inline: 24px;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+code {
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 0.15em 0.4em;
+    border-radius: 6px;
+    font-size: 0.9em;
+}
+
+/* ---------------------------------------------------------------- */
+/* Header                                                             */
+/* ---------------------------------------------------------------- */
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--bg-elevated);
+    border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding-block: 16px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 1.05rem;
+}
+
+.logo-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    background: var(--accent);
+    color: var(--accent-contrast);
+    font-size: 1rem;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    font-size: 0.92rem;
+    color: var(--text-muted);
+}
+
+.nav-links a:hover {
+    color: var(--text);
+}
+
+@media (max-width: 720px) {
+    .nav-links {
+        display: none;
+    }
+}
+
+/* ---------------------------------------------------------------- */
+/* Theme toggle button                                                */
+/* ---------------------------------------------------------------- */
+
+.theme-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.theme-toggle .icon {
+    position: absolute;
+    width: 19px;
+    height: 19px;
+}
+
+.theme-toggle .icon-moon {
+    opacity: 0;
+    transform: scale(0.6) rotate(-40deg);
+}
+
+html[data-theme="dark"] .theme-toggle .icon-sun {
+    opacity: 0;
+    transform: scale(0.6) rotate(40deg);
+}
+
+html[data-theme="dark"] .theme-toggle .icon-moon {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+}
+
+.theme-toggle .icon-sun {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+}
+
+.theme-toggle .icon {
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* ---------------------------------------------------------------- */
+/* Buttons                                                            */
+/* ---------------------------------------------------------------- */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 20px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: var(--accent-contrast);
+}
+
+.btn-primary:hover {
+    filter: brightness(1.08);
+}
+
+.btn-ghost {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--text);
+}
+
+.btn-ghost:hover {
+    background: var(--bg-elevated-hover);
+}
+
+.btn-large {
+    padding: 13px 26px;
+    font-size: 1rem;
+}
+
+/* ---------------------------------------------------------------- */
+/* Hero                                                               */
+/* ---------------------------------------------------------------- */
+
+.hero {
+    padding-block: 96px 72px;
+    text-align: center;
+}
+
+.eyebrow {
+    display: inline-flex;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: clamp(2.1rem, 4.5vw, 3.4rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 0 0 18px;
+    max-width: 720px;
+    margin-inline: auto;
+}
+
+.hero-sub {
+    color: var(--text-muted);
+    font-size: 1.08rem;
+    line-height: 1.6;
+    max-width: 560px;
+    margin: 0 auto 32px;
+}
+
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* ---------------------------------------------------------------- */
+/* Features / cards                                                   */
+/* ---------------------------------------------------------------- */
+
+.features {
+    padding-block: 72px;
+}
+
+.section-heading {
+    text-align: center;
+    max-width: 520px;
+    margin: 0 auto 44px;
+}
+
+.section-heading h2 {
+    font-size: 1.9rem;
+    letter-spacing: -0.01em;
+    margin: 0 0 10px;
+}
+
+.section-heading p {
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 860px) {
+    .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 560px) {
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 26px;
+    box-shadow: 0 1px 2px var(--shadow);
+}
+
+.card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--accent-soft);
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+}
+
+.card h3 {
+    margin: 0 0 8px;
+    font-size: 1.08rem;
+}
+
+.card p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.94rem;
+    line-height: 1.55;
+}
+
+/* ---------------------------------------------------------------- */
+/* CTA                                                                */
+/* ---------------------------------------------------------------- */
+
+.cta {
+    padding-block: 72px 96px;
+}
+
+.cta-inner {
+    text-align: center;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 56px 32px;
+}
+
+.cta h2 {
+    margin: 0 0 10px;
+    font-size: 1.7rem;
+}
+
+.cta p {
+    color: var(--text-muted);
+    max-width: 480px;
+    margin: 0 auto 28px;
+}
+
+/* ---------------------------------------------------------------- */
+/* Footer                                                             */
+/* ---------------------------------------------------------------- */
+
+.site-footer {
+    border-top: 1px solid var(--border);
+    padding-block: 28px;
+}
+
+.footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+}
+
+.footer-links {
+    display: flex;
+    gap: 18px;
+}
+
+.footer-links a:hover {
+    color: var(--text);
+}
+
+/* ---------------------------------------------------------------- */
+/* View Transitions — circular reveal                                 */
+/* ---------------------------------------------------------------- */
+
+/*
+  Chrome's default cross-fade animation on the old/new root snapshots
+  would otherwise run at the same time as our clip-path circle, causing
+  a visible fade "underneath" the reveal. Turning it off leaves only
+  the circle animation we drive from script.js.
+*/
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+    z-index: 1;
+}
+
+::view-transition-new(root) {
+    z-index: 2;
+}

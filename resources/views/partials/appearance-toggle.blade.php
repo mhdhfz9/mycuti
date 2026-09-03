@@ -12,16 +12,33 @@
             const rect = $el.getBoundingClientRect();
             const x = rect.left + rect.width / 2;
             const y = rect.top + rect.height / 2;
-            const r = Math.hypot(
+
+            // The farthest corner from the click point, so the circle always
+            // grows large enough to cover the entire viewport.
+            const endRadius = Math.hypot(
                 Math.max(x, window.innerWidth - x),
                 Math.max(y, window.innerHeight - y),
             );
 
-            document.documentElement.style.setProperty('--theme-toggle-x', `${x}px`);
-            document.documentElement.style.setProperty('--theme-toggle-y', `${y}px`);
-            document.documentElement.style.setProperty('--theme-toggle-r', `${r}px`);
+            const transition = document.startViewTransition(() => {
+                $flux.appearance = next;
+            });
 
-            document.startViewTransition(() => { $flux.appearance = next; });
+            transition.ready.then(() => {
+                document.documentElement.animate(
+                    {
+                        clipPath: [
+                            `circle(0px at ${x}px ${y}px)`,
+                            `circle(${endRadius}px at ${x}px ${y}px)`,
+                        ],
+                    },
+                    {
+                        duration: 1100,
+                        easing: 'cubic-bezier(0.65, 0, 0.35, 1)',
+                        pseudoElement: '::view-transition-new(root)',
+                    },
+                );
+            });
         },
     }"
     x-on:click="toggle()"

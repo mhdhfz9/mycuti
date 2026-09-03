@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
+use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
@@ -27,6 +29,7 @@ class FortifyServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureActions();
+        $this->configureAuthentication();
         $this->configureViews();
         $this->configureRateLimiting();
     }
@@ -38,6 +41,30 @@ class FortifyServiceProvider extends ServiceProvider
     {
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
         Fortify::createUsersUsing(CreateNewUser::class);
+    }
+
+    /**
+     * Configure how users are looked up and authenticated.
+     *
+     * The `ic_number` column is encrypted at rest, so it can't be matched
+     * with a plain `WHERE ic_number = ?` query — users are looked up via
+     * the `ic_number_hash` blind index instead.
+     */
+    private function configureAuthentication(): void
+    {
+        Fortify::authenticateUsing(function (Request $request) {
+            $user = User::where('ic_number_hash', User::hashIcNumber((string) $request->ic_number))->first();
+
+            if ($user && Hash::check((string) $request->password, $user->password)) {
+                return $user;
+            }
+
+            return null;
+        });
+
+        Fortify::confirmPasswordsUsing(function (User $user, string $password) {
+            return Hash::check($password, $user->password);
+        });
     }
 
     /**

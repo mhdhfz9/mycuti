@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circular Reveal Theme Toggle</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="#" class="logo">
+                <span class="logo-mark">◐</span>
+                <span>Luma</span>
+            </a>
+
+            <nav class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#faq">FAQ</a>
+            </nav>
+
+            <button
+                id="theme-toggle"
+                class="theme-toggle"
+                type="button"
+                aria-label="Toggle light and dark mode"
+                aria-pressed="false"
+            >
+                <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+                </svg>
+                <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <span class="eyebrow">Now with seamless theming</span>
+                <h1>A theme switch that feels alive.</h1>
+                <p class="hero-sub">
+                    Click the toggle in the top right corner. The new theme expands outward from
+                    the exact pixel you clicked, powered by the View Transitions API.
+                </p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary">Get started</button>
+                    <button class="btn btn-ghost">Learn more</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>Built for both sides of the clock</h2>
+                    <p>Every surface in this layout responds to the same set of theme tokens.</p>
+                </div>
+
+                <div class="card-grid">
+                    <article class="card">
+                        <div class="card-icon">⚡</div>
+                        <h3>Instant reveal</h3>
+                        <p>The circle grows from your cursor to cover the whole viewport in one smooth motion.</p>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-icon">🎨</div>
+                        <h3>Token-driven color</h3>
+                        <p>Background, card, text, and accent colors are all CSS custom properties — swap the palette in one place.</p>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-icon">🛡️</div>
+                        <h3>Graceful fallback</h3>
+                        <p>Browsers without View Transitions support still get an instant, correct theme change — no broken UI.</p>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-icon">♿</div>
+                        <h3>Reduced motion aware</h3>
+                        <p>Respects <code>prefers-reduced-motion</code> and skips the animation for users who need it.</p>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-icon">💾</div>
+                        <h3>Remembers your choice</h3>
+                        <p>The selected theme is saved to <code>localStorage</code> and restored on the next visit.</p>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-icon">🧩</div>
+                        <h3>Self-contained</h3>
+                        <p>Just HTML, CSS, and vanilla JS — no build step, no dependencies.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta">
+            <div class="container cta-inner">
+                <h2>Try it from anywhere on the page.</h2>
+                <p>The reveal always originates from wherever you clicked — top right corner, or any button you wire up.</p>
+                <button class="btn btn-primary btn-large" id="cta-toggle">Toggle theme from here</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <span>© 2026 Luma. Built to demonstrate the View Transitions API.</span>
+            <span class="footer-links">
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#faq">FAQ</a>
+            </span>
+        </div>
+    </footer>
+
+<script src="script.js"></script>
+</body>
+</html>
