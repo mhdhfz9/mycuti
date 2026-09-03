@@ -26,7 +26,7 @@
             this.raf = requestAnimationFrame((t) => this.tick(t));
         },
     }"
-    x-init="tick()"
+    x-init="$nextTick(() => tick())"
     x-on:scroll.window.passive="onScroll()"
     x-on:destroy.window="cancelAnimationFrame(raf)"
     class="pointer-events-none fixed inset-0 -z-10 overflow-hidden"

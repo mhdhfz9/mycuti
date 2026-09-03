@@ -3,6 +3,7 @@
     x-data="{
         toggle() {
             const next = $flux.appearance === 'dark' ? 'light' : 'dark';
+            const isExpanding = next === 'dark';
 
             if (! document.startViewTransition || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                 $flux.appearance = next;
@@ -13,12 +14,27 @@
             const x = rect.left + rect.width / 2;
             const y = rect.top + rect.height / 2;
 
-            // The farthest corner from the click point, so the circle always
-            // grows large enough to cover the entire viewport.
-            const endRadius = Math.hypot(
+            // Position as a percentage of the viewport rather than raw
+            // pixels — pixel values were landing off-target in this app's
+            // layout, percentages line up correctly.
+            const xPct = (x / window.innerWidth) * 100;
+            const yPct = (y / window.innerHeight) * 100;
+
+            // The farthest corner from the button, so the circle always
+            // reaches the edge of the viewport — with extra room on top so
+            // the reveal feels bigger/more generous than the bare minimum.
+            const radius = Math.hypot(
                 Math.max(x, window.innerWidth - x),
                 Math.max(y, window.innerHeight - y),
-            );
+            ) * 2;
+
+            // Light → dark grows a circle of the new (dark) screen outward.
+            // Dark → light instead shrinks the old (dark) screen inward,
+            // revealing light underneath — so it needs the old snapshot
+            // stacked on top instead of the new one.
+            if (! isExpanding) {
+                document.documentElement.classList.add('theme-contracting');
+            }
 
             const transition = document.startViewTransition(() => {
                 $flux.appearance = next;
@@ -27,17 +43,20 @@
             transition.ready.then(() => {
                 document.documentElement.animate(
                     {
-                        clipPath: [
-                            `circle(0px at ${x}px ${y}px)`,
-                            `circle(${endRadius}px at ${x}px ${y}px)`,
-                        ],
+                        clipPath: isExpanding
+                            ? [`circle(0px at ${xPct}% ${yPct}%)`, `circle(${radius}px at ${xPct}% ${yPct}%)`]
+                            : [`circle(${radius}px at ${xPct}% ${yPct}%)`, `circle(0px at ${xPct}% ${yPct}%)`],
                     },
                     {
-                        duration: 1100,
+                        duration: 1500,
                         easing: 'cubic-bezier(0.65, 0, 0.35, 1)',
-                        pseudoElement: '::view-transition-new(root)',
+                        pseudoElement: isExpanding ? '::view-transition-new(root)' : '::view-transition-old(root)',
                     },
                 );
+            });
+
+            transition.finished.finally(() => {
+                document.documentElement.classList.remove('theme-contracting');
             });
         },
     }"

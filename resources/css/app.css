@@ -73,12 +73,26 @@ select:focus[data-flux-control] {
 
 /*
   The circular reveal itself is driven from JS (see partials/appearance-toggle.blade.php)
-  via document.documentElement.animate(...) targeting ::view-transition-new(root).
-  Here we only need to disable the browser's default crossfade on both snapshots
-  so it doesn't run underneath/instead of that circle animation.
+  via document.documentElement.animate(...), clipping either the new snapshot
+  (expanding into it, light -> dark) or the old snapshot (shrinking it away,
+  dark -> light). Here we only need to disable the browser's default crossfade
+  on both snapshots so it doesn't run underneath/instead of that animation.
 */
 ::view-transition-old(root),
 ::view-transition-new(root) {
     animation: none;
     mix-blend-mode: normal;
 }
+
+/* Normally the new snapshot paints on top of the old one, which is what the
+   expanding (light -> dark) reveal needs. The shrinking (dark -> light)
+   reveal needs the old snapshot on top instead, so it's seen shrinking away
+   to uncover the new one underneath. */
+html.theme-contracting::view-transition-old(root) {
+    z-index: 2;
+}
+
+html.theme-contracting::view-transition-new(root) {
+    z-index: 1;
+}
+
