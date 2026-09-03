@@ -9,8 +9,8 @@
 
             {{-- Navbar --}}
             <header class="sticky top-0 z-50 px-4 pt-4 sm:px-6 lg:px-8">
-                <nav class="mx-auto flex max-w-6xl items-center justify-between rounded-2xl border border-zinc-200 bg-white/70 px-5 py-3 shadow-lg shadow-zinc-900/5 backdrop-blur-xl dark:border-white/10 dark:bg-white/5 dark:shadow-black/10">
-                    <a href="{{ url('/') }}" class="flex items-center gap-2" wire:navigate>
+                <nav class="mx-auto grid max-w-6xl grid-cols-2 items-center gap-4 rounded-2xl border border-zinc-200 bg-white/70 px-5 py-3 shadow-lg shadow-zinc-900/5 backdrop-blur-xl md:grid-cols-[1fr_auto_1fr] dark:border-white/10 dark:bg-white/5 dark:shadow-black/10">
+                    <a href="{{ url('/') }}" class="flex items-center gap-2 justify-self-start" wire:navigate>
                         <x-app-logo-icon class="size-10" />
                         <span class="text-lg font-semibold tracking-tight">
                             <span class="text-zinc-900 dark:text-white">My</span><span class="bg-gradient-to-r from-emerald-300 to-teal-300 bg-clip-text text-transparent">Cuti</span>
@@ -23,7 +23,7 @@
                         <a href="#faq" class="transition hover:text-zinc-900 dark:hover:text-white">{{ __('FAQ') }}</a>
                     </div>
 
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center justify-self-end gap-2">
                         @include('partials.appearance-toggle')
 
                         @auth
