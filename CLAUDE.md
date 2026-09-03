@@ -184,3 +184,11 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 </laravel-boost-guidelines>
 
 @PROJECT_STATUS.md
+
+## Session continuity
+
+- If the user's message is or starts with "sambung" (Malay for "continue") but wasn't sent as the `/sambung` slash command, treat it the same way: re-read `PROJECT_STATUS.md` fresh from disk (don't rely on a possibly-stale copy already in context), check `git log --oneline -10` for anything not yet reflected in it, and brief the user before doing anything else.
+- Whenever you complete a discrete feature, fix a non-trivial bug, or make a durable architectural decision, update `PROJECT_STATUS.md` before ending your turn: refresh the relevant status table/section and append a line to the Session Log. A `Stop` hook (`.claude/hooks/stop-check.sh`) enforces this — it blocks the turn from ending if project files changed but `PROJECT_STATUS.md` didn't, so don't try to route around it; just update the file.
+- Don't update `PROJECT_STATUS.md` for pure Q&A turns with no file changes — the hook won't require it and a churn-y log is worse than a stable one.
+- Before starting any high-stakes change (broad architecture/data-model changes, security-sensitive work, or anything touching persistent/session-spanning config like hooks or `CLAUDE.md` itself), use the `discuss` skill instead of implementing directly — propose in writing first, wait for an explicit go-ahead. See `.claude/skills/discuss/SKILL.md` for the exact criteria and process.
+- `PENDING.md` lists everything currently outstanding — open `/discuss` proposals awaiting a decision, "next up" tasks, open decisions. Check it (or run `/pending-task`) when the user asks what's left or hanging; the `discuss` skill keeps it updated automatically as proposals are raised and resolved.

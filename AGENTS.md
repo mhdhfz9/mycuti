@@ -184,3 +184,10 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 </laravel-boost-guidelines>
 
 @PROJECT_STATUS.md
+
+## Session continuity
+
+- If the user's message is or starts with "sambung" (Malay for "continue"), re-read `PROJECT_STATUS.md` fresh from disk (don't rely on a possibly-stale copy already in context), check recent git history for anything not yet reflected in it, and brief the user before doing anything else.
+- Whenever you complete a discrete feature, fix a non-trivial bug, or make a durable architectural decision, update `PROJECT_STATUS.md` before ending your turn: refresh the relevant status table/section and append a line to the Session Log. (Claude Code sessions additionally have this enforced by a `Stop` hook in `.claude/hooks/stop-check.sh` — other agents don't have that safety net, so follow this rule directly.)
+- Don't update `PROJECT_STATUS.md` for pure Q&A turns with no file changes.
+- Before starting any high-stakes change (broad architecture/data-model changes, security-sensitive work, or anything touching persistent/session-spanning config), propose a written plan first — what, which files/locations, how it satisfies the requirement, how it'll be verified — and wait for explicit approval before touching any files. (Claude Code sessions have this packaged as the `discuss` skill: `.claude/skills/discuss/SKILL.md`.)
