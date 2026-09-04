@@ -21,6 +21,7 @@
                         <a href="#features" class="transition hover:text-zinc-900 dark:hover:text-white">{{ __('Features') }}</a>
                         <a href="#workflow" class="transition hover:text-zinc-900 dark:hover:text-white">{{ __('How it works') }}</a>
                         <a href="#faq" class="transition hover:text-zinc-900 dark:hover:text-white">{{ __('FAQ') }}</a>
+                        <a href="{{ route('contact-us') }}" class="transition hover:text-zinc-900 dark:hover:text-white" wire:navigate>{{ __('Contact Us') }}</a>
                     </div>
 
                     <div class="flex items-center gap-2">

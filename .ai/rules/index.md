@@ -6,3 +6,4 @@ Before planning or editing, find the row whose globs match the file's path and r
 | --- | --- |
 | app/Models/User.php | .ai/rules/models.md |
 | database/seeders/** | .ai/rules/seeders.md |
+| resources/views/pages/** | .ai/rules/livewire-pages.md |
