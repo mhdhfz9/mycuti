@@ -50,6 +50,8 @@ If the user gives feedback that isn't a clear go-ahead (asks a question, request
 
 **Accepted execute signals**: "please execute", "execute", "ok build it", "buat", "go ahead", or anything else unambiguously approving the proposal just presented. If it's ambiguous whether they're approving the whole thing or just commenting on one part, ask which (in one short sentence, not another full proposal round). Once execution starts, remove the corresponding `PENDING.md` entry (see above).
 
+**Spec before code**: the moment an execute signal is accepted, before touching any implementation file, invoke the `spec-maker` skill (Mode 1) to write the full spec for this proposal to `.ai/specs/<PROP-ID>-<slug>.md`. Implementation only begins once that file exists. This is not optional and does not need a separate ask — it's part of what "please execute" triggers. Skip it only for proposals that produce no implementation of their own (e.g. a proposal whose entire content *is* a spec-maker/discuss process change) — use judgment, but the default is spec-first.
+
 ## Small decisions found *during* an approved plan
 
 Once execution has started, small contained forks (a field name, an enum's exact values, a minor UX choice) don't need another `/discuss` round — use `AskUserQuestion` with a recommended default, or just make the reasonable call and note it in the summary afterward. `/discuss` is for the shape of the plan itself, not every micro-decision inside it. Don't turn a single high-stakes decision into a barrage of tool-based questions either — if there are several real architectural forks at once, that's still one `/discuss` proposal (present the options in prose, or in one batched `AskUserQuestion` call at most), not several separate interruptions.
